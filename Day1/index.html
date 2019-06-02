@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+  <div class="record">
+    <button class="rewind"><i class="fas fa-fast-backward"></i></button>
+    <button class="repeat"><i class="fas fa-redo"></i></button>
+    <button class="record-button"><div class="record-button-inner"></div></button>
+    <button class="play"><i class="fas fa-play-circle"></i></button>
+    <button class="pause"><i class="fas fa-pause"></i></button>
+  </div>
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+  let keys = document.querySelectorAll(".key");
+  let isRecording = false;
+  let isPlaying = false;
+  let isPaused = false;
+  let isRepeating = false;
+  let start = Date.now();
+  let sampleOne = [];
+  let repeatSample = "";
+  let pauseTimeout = [];
+  let samples = [];
+  let counter = 0;
+  function playSound(e) {
+    let key = document.querySelector(".key[data-key='" + e + "']");
+    let sound = document.querySelector("audio[data-key='" + e + "']");
+    if(sound) {
+      if(isRecording) {
+        let newSound = {};
+        newSound = {time: Date.now() - start, key: e};
+        sampleOne.push(newSound);
+        console.log(sampleOne);
+      }
+      sound.currentTime = 0;
+      sound.play();
+      key.classList.add("playing");
+    }
+  }
+  function Timer(callback, delay) {
+    let timerId, start, remaining = delay;
+
+    this.pause = function() {
+      window.clearTimeout(timerId);
+      remaining -= Date.now() - start;
+    };
+    this.resume = function() {
+      start = Date.now();
+      window.clearTimeout(timerId);
+      timerId = window.setTimeout(callback, remaining);
+    };
+    this.resume();
+  }
+  function playSample(sample) {
+    sample.forEach((sound, i) => {
+      pauseTimeout[i] = new Timer(() => {
+      counter = i;
+      playSound(sound.key);
+      if(i === sampleOne.length - 1) {
+        isPlaying = false;
+        isRepeating ? (playSample(sample), isPlaying = true) : "";
+      }
+      }, sound.time);
+    });
+  }
+  function record(e) {
+    let recordInner = document.querySelector(".record-button-inner");
+    isPaused = false;
+    if(isRecording) {
+      recordInner.style.backgroundColor = "#B71C1C";
+      recordInner.style.boxShadow = "none";
+      isRecording = false;
+      return;
+    }
+    start = Date.now();
+    sampleOne = [];
+    recordInner.style.backgroundColor = "red";
+    recordInner.style.boxShadow = "0px 0px 20px #E57373";
+    isRecording = true;
+  }
+  function removeTransition(e) {
+    this.classList.remove("playing");
+  }
+  document.querySelector(".record").addEventListener("click", function(e) {
+    if(e.target.closest(".record-button") && !isPlaying) {
+      record(e);
+    }
+    if(e.target.closest(".play") && !isRecording && sampleOne.length !== 0 && !isPlaying) {
+      // console.log("PAUSE: " + isPaused);
+      // console.log("PLAY: " + isPlaying);
+      // console.log("REPEAT: " + isRepeating);
+      console.log(sampleOne);
+      isPlaying = true;
+      if(isPaused) {
+        for(let i = counter; i < pauseTimeout.length; i++) {
+          pauseTimeout[i].resume();
+        }
+        isPaused = false;
+        return;
+      }
+      playSample(sampleOne);
+    }
+    if(e.target.closest(".repeat") && !isRecording) {
+      isRepeating ? isRepeating = false : isRepeating = true;
+    }
+    if(e.target.closest(".pause") && isPlaying) {
+      for(let i = counter; i < pauseTimeout.length; i++) {
+        pauseTimeout[i].pause();
+      }
+      isPlaying = false;
+      isPaused = true;
+    }
+    if(e.target.closest(".rewind")) {
+      for(let i = counter; i < pauseTimeout.length; i++) {
+          pauseTimeout[i].pause();
+      }
+      if(isPaused) {
+        isPaused = false;
+      }
+      else if(isPlaying) {
+        playSample(sampleOne);
+      }
+    }
+    console.log(e.target);
+  });
+  document.querySelector(".keys").addEventListener("click", function(e) {
+    if(!e.target.closest(".key")) return;
+    playSound(e.target.closest(".key").getAttribute("data-key"));
+  });
+  window.addEventListener("keydown", function(e) {
+    if(!document.querySelector("audio[data-key='" + e.keyCode + "']")) return;
+    playSound(e.keyCode.toString());
+  });
+  keys.forEach(key => key.addEventListener("transitionend", removeTransition));
+</script>
+</body>
+</html>
