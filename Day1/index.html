@@ -47,11 +47,44 @@
     </div>
   </div>
   <div class="record">
+    <div class="sample-container">
+      <div class="sample-controls">
+        <button class="samples sample-one"></button>
+        <button class="sample-control sample-repeat"><i class="fas fa-redo"></i></button>
+      </div>
+      <div class="sample-controls">
+        <button class="samples sample-two"></button>
+        <button class="sample-control sample-repeat"><i class="fas fa-redo"></i></button>
+      </div>
+      <div class="sample-controls">
+        <button class="samples sample-three"></button>
+        <button class="sample-control sample-repeat"><i class="fas fa-redo"></i></button>
+      </div>
+      <div class="sample-controls">
+        <button class="samples sample-four"></button>
+        <button class="sample-control sample-repeat"><i class="fas fa-redo"></i></button>
+      </div>
+      <div class="sample-controls">
+        <button class="samples sample-five"></button>
+        <button class="sample-control sample-repeat"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
     <button class="rewind"><i class="fas fa-fast-backward"></i></button>
     <button class="repeat"><i class="fas fa-redo"></i></button>
     <button class="record-button"><div class="record-button-inner"></div></button>
     <button class="play"><i class="fas fa-play-circle"></i></button>
     <button class="pause"><i class="fas fa-pause"></i></button>
+    <div class="test-sample">
+      <button class="samples sample-six"></button>
+      <div class="test-sample-text">
+        <p>Save to: 
+        <span class="save-record save-one">1</span> <span class="save-record save-two">2</span> 
+        <span class="save-record save-three">3</span> <span class="save-record save-four">4</span> 
+        <span class="save-record save-five">5</span>
+        </p>
+      </div>
+    </div>
+    <!-- <button class="samples sample-six"></button> -->
   </div>
   <audio data-key="65" src="sounds/clap.wav"></audio>
   <audio data-key="83" src="sounds/hihat.wav"></audio>
@@ -67,14 +100,18 @@
   let keys = document.querySelectorAll(".key");
   let isRecording = false;
   let isPlaying = false;
+  let isSamplePlaying = [false, false, false, false, false];
   let isPaused = false;
   let isRepeating = false;
   let start = Date.now();
-  let sampleOne = [];
-  let repeatSample = "";
-  let pauseTimeout = [];
-  let samples = [];
+  // let sampleOne = [];
+  let isSampleRepeating = [false, false, false, false, false];
+  // let pauseTimeout = [];
+  let pauseTimeout = [[],[],[],[],[],[]];
+  let samples = [[],[],[],[],[],[]];
+  // let filledSample = [false, false, false, false, false, false];
   let counter = 0;
+  let whichSample = "";
   function playSound(e) {
     let key = document.querySelector(".key[data-key='" + e + "']");
     let sound = document.querySelector("audio[data-key='" + e + "']");
@@ -82,8 +119,9 @@
       if(isRecording) {
         let newSound = {};
         newSound = {time: Date.now() - start, key: e};
-        sampleOne.push(newSound);
-        console.log(sampleOne);
+        samples[5].push(newSound);
+        // filledSample[5] = true;
+        console.log(samples[5]);
       }
       sound.currentTime = 0;
       sound.play();
@@ -104,14 +142,47 @@
     };
     this.resume();
   }
-  function playSample(sample) {
+  function classToNumber(sample, save) {
+    let sampleMap = new Map([[0, "sample-one"], [1, "sample-two"], [2, "sample-three"], [3, "sample-four"], [4, "sample-five"]]);
+    let saveMap = new Map([[0, "save-one"], [1, "save-two"], [2, "save-three"], [3, "save-four"], [4, "save-five"]]);
+    if(sample) {
+      for(let [key, value] of sampleMap.entries()) {
+        if(sample === value) {
+          return key;
+        }
+      }
+    }
+    if(save) {
+      for(let [key, value] of saveMap.entries()) {
+        if(save === value) {
+          whichSample = sampleMap.get(key);
+          return key;
+        }
+      }
+    }
+  }
+  function numberToClass(number) {
+    let sampleMap = new Map([[0, "sample-one"], [1, "sample-two"], [2, "sample-three"], [3, "sample-four"], [4, "sample-five"]]);
+    for(let [key, value] of sampleMap.entries()) {
+      if(number === key) {
+        return value;
+      }
+    }
+  }
+  function playSample(sample, isSetSample, sampleIndex) {
     sample.forEach((sound, i) => {
-      pauseTimeout[i] = new Timer(() => {
+      pauseTimeout[sampleIndex][i] = new Timer(() => {
       counter = i;
       playSound(sound.key);
-      if(i === sampleOne.length - 1) {
-        isPlaying = false;
-        isRepeating ? (playSample(sample), isPlaying = true) : "";
+      if(i === sample.length - 1) {
+        if(isSetSample) {
+          isSamplePlaying[sampleIndex] = false;
+          isSampleRepeating[sampleIndex] ? (playSample(sample, true, sampleIndex), isSamplePlaying[sampleIndex] = true) : "";
+        }
+        else {
+          isPlaying = false;
+          isRepeating ? (playSample(sample, false, 5), isPlaying = true) : "";
+        }
       }
       }, sound.time);
     });
@@ -122,11 +193,12 @@
     if(isRecording) {
       recordInner.style.backgroundColor = "#B71C1C";
       recordInner.style.boxShadow = "none";
+      document.querySelector(".sample-six").classList.add("sample-active");
       isRecording = false;
       return;
     }
     start = Date.now();
-    sampleOne = [];
+    samples[5].length = 0;
     recordInner.style.backgroundColor = "red";
     recordInner.style.boxShadow = "0px 0px 20px #E57373";
     isRecording = true;
@@ -135,43 +207,100 @@
     this.classList.remove("playing");
   }
   document.querySelector(".record").addEventListener("click", function(e) {
+    ////HANDLE RECORD
     if(e.target.closest(".record-button") && !isPlaying) {
       record(e);
     }
-    if(e.target.closest(".play") && !isRecording && sampleOne.length !== 0 && !isPlaying) {
-      // console.log("PAUSE: " + isPaused);
-      // console.log("PLAY: " + isPlaying);
-      // console.log("REPEAT: " + isRepeating);
-      console.log(sampleOne);
+    ////HANDLE SAMPLES RECORD AND REPEAT
+    if(e.target.closest(".sample-controls") && !e.target.classList.contains("samples")) {
+      if(e.target.closest(".sample-repeat").classList.contains("sample-repeat")) {
+        let samplesSelector = e.target.parentNode.parentNode.children[0];
+        let sampleIndex = classToNumber(samplesSelector.classList[1]);
+        let sampleNumber = samples[sampleIndex];
+        if(e.target.closest(".sample-repeat").classList.contains("sample-repeat-active")) {
+          isSampleRepeating[sampleIndex] ? isSampleRepeating[sampleIndex] = false : isSampleRepeating[sampleIndex] = true;
+          e.target.closest(".sample-repeat").classList.remove("sample-repeat-active");
+        }
+        else {
+          isSampleRepeating[sampleIndex] ? isSampleRepeating[sampleIndex] = false : isSampleRepeating[sampleIndex] = true;
+          if(sampleNumber.length !== 0 && samplesSelector.classList.contains("sample-active")) {
+            isSamplePlaying[sampleIndex] ? "" : playSample(sampleNumber, true, sampleIndex);
+          }
+          e.target.closest(".sample-repeat").classList.add("sample-repeat-active");
+        }
+      }
+    }
+    ////HANDLE SAVE RECORDING TO SAMPLE
+    if(e.target.classList.contains("save-record") && samples[5].length !== 0) {
+      let saveSelector = e.target;
+      let index = classToNumber(false, saveSelector.classList[1]);
+      let saveNumber = samples[index];
+      saveNumber.length = 0;
+      saveNumber.push(...samples[5]);
+      document.querySelector("." + whichSample).style.backgroundColor = "#E0E0E0";
+      if(document.querySelector("." + numberToClass(index)).classList.contains("sample-active")) {
+        document.querySelector("." + numberToClass(index)).click();
+      }
+    }
+    ////HANDLE SAMPLES PLAY AND PAUSE
+    if(e.target.closest(".samples") && !e.target.closest(".samples").classList.contains("sample-six")) {
+      let samplesSelector = e.target.closest(".samples");
+      let index = classToNumber(samplesSelector.classList[1]);
+      let sampleNumber = samples[index];
+      console.log(sampleNumber);
+      if(samplesSelector.classList.contains("sample-active")) {
+        //IF IS PLAYING THEN
+        //PAUSE
+        for(let i = counter; i < pauseTimeout[index].length; i++) {
+          pauseTimeout[index][i].pause();
+        }
+        isSamplePlaying[index] = false;
+        e.target.classList.remove("sample-active");
+        e.target.style.backgroundColor = "#E0E0E0";
+      }
+      else if(sampleNumber.length !== 0) {
+        //PLAY
+        playSample(sampleNumber, true, index);
+        e.target.classList.add("sample-active");
+        e.target.style.backgroundColor = "white";
+      }
+    }
+    ////HANDLE PLAY
+    if(e.target.closest(".play") && !isRecording && samples[5].length !== 0 && !isPlaying) {
+      console.log(samples[0]);
       isPlaying = true;
       if(isPaused) {
-        for(let i = counter; i < pauseTimeout.length; i++) {
-          pauseTimeout[i].resume();
+        for(let i = counter; i < pauseTimeout[5].length; i++) {
+          pauseTimeout[5][i].resume();
         }
         isPaused = false;
         return;
       }
-      playSample(sampleOne);
+      playSample(samples[5], false, 5);
     }
+    ////HANDLE REPEAT
     if(e.target.closest(".repeat") && !isRecording) {
       isRepeating ? isRepeating = false : isRepeating = true;
     }
+    ////HANDLE PAUSE
     if(e.target.closest(".pause") && isPlaying) {
-      for(let i = counter; i < pauseTimeout.length; i++) {
-        pauseTimeout[i].pause();
+      console.log(pauseTimeout);
+      for(let i = counter; i < pauseTimeout[5].length; i++) {
+        pauseTimeout[5][i].pause();
       }
       isPlaying = false;
       isPaused = true;
     }
+    ////HANDLE REWIND
     if(e.target.closest(".rewind")) {
-      for(let i = counter; i < pauseTimeout.length; i++) {
-          pauseTimeout[i].pause();
+      for(let i = counter; i < pauseTimeout[5].length; i++) {
+          pauseTimeout[5][i].pause();
       }
       if(isPaused) {
         isPaused = false;
       }
       else if(isPlaying) {
-        playSample(sampleOne);
+        playSample(samples[5], false, 5);
       }
     }
     console.log(e.target);
