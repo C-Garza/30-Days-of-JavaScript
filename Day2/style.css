@@ -48,3 +48,15 @@ body {
   transform-origin: right;
   transform: rotate(90deg);
 }
+.midpoint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: black;
+  left: 50%;
+  top: 50.5%;
+  transform: translate(-50%, -50%);
+}
