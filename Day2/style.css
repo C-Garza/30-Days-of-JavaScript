@@ -30,6 +30,8 @@ body {
     inset 0 0 0 3px #EFEFEF,
     inset 0 0 10px black,
     0 0 10px rgba(0,0,0,0.2);
+  background: url(https://cssanimation.rocks/images/posts/clocks/ios_clock.svg) no-repeat center;
+  background-size: 90%;
 }
 .clock-face {
   position: relative;
@@ -47,6 +49,10 @@ body {
   transition: all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);
   transform-origin: right;
   transform: rotate(90deg);
+}
+.hour-hand {
+  width: 30%;
+  left: 20%;
 }
 .no-transition {
   transition: none;
