@@ -38,9 +38,12 @@ body {
   transform: translateY(-3px); /* account for the height of the clock hands */
 }
 .hand {
-  width: 50%;
+  width: 50%; 
   height: 6px;
   background: black;
   position: absolute;
   top: 50%;
+  transition: all 0.05s linear;
+  transform-origin: right;
+  transform: rotate(90deg);
 }
