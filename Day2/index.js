@@ -24,15 +24,15 @@ window.onload = function() {
     hourHand.style.transform = "rotate(" + getDegrees(hours, "hour") + "deg)";
     if(seconds === 0) {
       secondHand.style.transition = "none";
-      secondHand.style.transition = "all 0.05s linear;"
+      secondHand.style.transition = "all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);"
     }
     if(minutes === 0) {
       minuteHand.style.transition = "none";
-      minuteHand.style.transition = "all 0.05s linear;"
+      minuteHand.style.transition = "all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);"
     }
     if(hours === 0) {
       hourHand.style.transition = "none";
-      hourHand.style.transition = "all 0.05s linear;"
+      hourHand.style.transition = "all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);"
     }
   }
 
