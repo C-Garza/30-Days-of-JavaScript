@@ -23,16 +23,19 @@ window.onload = function() {
     minuteHand.style.transform = "rotate(" + getDegrees(minutes) + "deg)";
     hourHand.style.transform = "rotate(" + getDegrees(hours, "hour") + "deg)";
     if(seconds === 0) {
-      secondHand.style.transition = "none";
-      secondHand.style.transition = "all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);"
+      secondHand.classList.add("no-transition");
+      secondHand.offsetHeight;
+      secondHand.classList.remove("no-transition");
     }
     if(minutes === 0) {
-      minuteHand.style.transition = "none";
-      minuteHand.style.transition = "all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);"
+      minuteHand.classList.add("no-transition");
+      minuteHand.offsetHeight;
+      minuteHand.classList.remove("no-transition");
     }
     if(hours === 0) {
-      hourHand.style.transition = "none";
-      hourHand.style.transition = "all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);"
+      hourHand.classList.add("no-transition");
+      hourHand.offsetHeight;
+      hourHand.classList.remove("no-transition");
     }
   }
 
