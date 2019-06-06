@@ -2,10 +2,11 @@ window.onload = function() {
   let secondHand = document.querySelector(".second-hand");
   let minuteHand = document.querySelector(".min-hand");
   let hourHand = document.querySelector(".hour-hand");
+  getTime();
 
   function getDegrees(time, unit) {
     if(unit === "hour") {
-      return ((time * 360) / 12) + 90;
+      return ((time * 30)/ 60) + 90;
     }
     return ((time * 360) / 60) + 90;
   }
@@ -21,7 +22,7 @@ window.onload = function() {
     let hours = convertMilitaryTime(start.getHours());
     secondHand.style.transform = "rotate(" + getDegrees(seconds) + "deg)";
     minuteHand.style.transform = "rotate(" + getDegrees(minutes) + "deg)";
-    hourHand.style.transform = "rotate(" + getDegrees(hours, "hour") + "deg)";
+    hourHand.style.transform = "rotate(" + getDegrees(minutes, "hour") + "deg)";
     if(seconds === 0) {
       secondHand.classList.add("no-transition");
       secondHand.offsetHeight;
