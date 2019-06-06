@@ -10,9 +10,6 @@ window.onload = function() {
     return ((time * 360) / 60) + 90;
   }
   function convertMilitaryTime(hour) {
-    if(hour === 0) {
-      return (hour + 1);
-    }
     if (hour > 12) {
       return (hour - 12);
     }
@@ -22,10 +19,21 @@ window.onload = function() {
     let seconds = start.getSeconds();
     let minutes = start.getMinutes();
     let hours = convertMilitaryTime(start.getHours());
-    console.log(hours);
     secondHand.style.transform = "rotate(" + getDegrees(seconds) + "deg)";
     minuteHand.style.transform = "rotate(" + getDegrees(minutes) + "deg)";
     hourHand.style.transform = "rotate(" + getDegrees(hours, "hour") + "deg)";
+    if(seconds === 0) {
+      secondHand.style.transition = "none";
+      secondHand.style.transition = "all 0.05s linear;"
+    }
+    if(minutes === 0) {
+      minuteHand.style.transition = "none";
+      minuteHand.style.transition = "all 0.05s linear;"
+    }
+    if(hours === 0) {
+      hourHand.style.transition = "none";
+      hourHand.style.transition = "all 0.05s linear;"
+    }
   }
 
   setInterval(getTime, 1000);
