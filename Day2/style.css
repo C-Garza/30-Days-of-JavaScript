@@ -48,6 +48,9 @@ body {
   transform-origin: right;
   transform: rotate(90deg);
 }
+.no-transition {
+  transition: none;
+}
 .midpoint {
   position: absolute;
   left: 50%;
