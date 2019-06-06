@@ -43,6 +43,7 @@ body {
   background: black;
   position: absolute;
   top: 50%;
+  border-radius: 15px;
   transition: all 0.05s linear;
   transform-origin: right;
   transform: rotate(90deg);
