@@ -44,7 +44,7 @@ body {
   position: absolute;
   top: 50%;
   border-radius: 15px;
-  transition: all 0.05s linear;
+  transition: all 0.05s cubic-bezier(0.35, 3.12, 0.58, 1);
   transform-origin: right;
   transform: rotate(90deg);
 }
