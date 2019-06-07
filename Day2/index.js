@@ -113,7 +113,7 @@ window.onload = function() {
       if(!isDegreeCelsius) {
         convertTemperature(currentTemp);
       }
-      cityName.children[0].textContent = data.name;
+      cityName.children[0].textContent = data.name + ", " + data.sys.country;
       weatherStatus.children[0].textContent = currentTemp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
       weatherIcon.children[0].src = data.weather[0].icon;
       weatherIcon.children[0].alt = data.weather[0].main;

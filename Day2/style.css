@@ -9,8 +9,6 @@ html {
 body {
   margin: 0;
   font-size: 2rem;
-  /* display: flex; */
-  /* flex: 1; */
   height: calc(100vh - 100px);
   align-items: center;
 }
@@ -24,7 +22,6 @@ body {
   margin-top: 100px;
   font-family: "Lato";
   letter-spacing: 1px;
-  /* border: 1px solid red; */
 }
 .weekday {
   font-size: 6rem;
@@ -99,4 +96,18 @@ body {
 .weather-container {
   display: none;
   cursor: pointer;
+  font-size: 2.8rem;
+  font-family: "Lato";
+}
+.city-name {
+  font-family: "Vollkorn";
+}
+.city-name p {
+  margin: 10px;
+}
+.weather-status p {
+  margin: 0;
+}
+.weather-icon img {
+  width: 60px;
 }
