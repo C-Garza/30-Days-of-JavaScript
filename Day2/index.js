@@ -5,6 +5,8 @@ window.onload = function() {
   let hourHand = document.querySelector(".hour-hand");
   let weekDay = document.querySelector(".weekday");
   let dateSelector = document.querySelector(".date");
+  let allowButton = document.getElementById("allow-weather");
+  let weatherContainer = document.querySelector(".weather-container");
   let cityName = document.querySelector(".city-name");
   let weatherStatus = document.querySelector(".weather-status");
   let weatherIcon = document.querySelector(".weather-icon");
@@ -13,6 +15,7 @@ window.onload = function() {
   let currentTemp = 0;
   let isShortStyle = false;
   let isDegreeCelsius = true;
+  let allowWeather = false;
 
   ////INIT
   getTime();
@@ -83,6 +86,8 @@ window.onload = function() {
     fetch(api)
     .then(response => {
       if(response.ok) {
+        allowButton.style.display = "none";
+        weatherContainer.style.display = "block";
         return response.json()
       }
       else {
@@ -100,10 +105,13 @@ window.onload = function() {
       weatherIcon.children[0].alt = data.weather[0].main;
     })
     .catch(error => {
+      allowButton.style.display = "inline-block";
+      weatherContainer.style.display = "none";
       console.log("Fetch error, responded with error code: ", error);
     });
   }
   function handleGeolocationError(error) {
+    allowWeather = false;
     if(error.code === 1) {
       console.log("PERMISSION DENIED");
       return;
@@ -129,7 +137,10 @@ window.onload = function() {
       return currentTemp;
     }
   }
-  getWeather();
+  allowButton.addEventListener("click", function(e) {
+    allowWeather = true;
+    getWeather();
+  });
 
   setInterval(getTime, 1000);
 };
