@@ -65,7 +65,14 @@ window.onload = function() {
     if(second !== 0 || min !== 0 || hour !== 0) return;
     let start = new Date();
     weekDay.children[0].textContent = start.toLocaleDateString("en-us", {weekday: "long"});
-    dateSelector.children[0].textContent = start.toLocaleDateString("en-us", optionsOne);
+    if(isShortStyle) {
+      isShortStyle = false;
+      dateSelector.children[0].textContent = start.toLocaleDateString("en-us", optionsTwo);
+    }
+    else {
+      isShortStyle = true;
+      dateSelector.children[0].textContent = start.toLocaleDateString("en-us", optionsOne);
+    }
   }
   ////GET GEOLOCATION FOR WEATHER
   function getWeather() {
@@ -140,6 +147,9 @@ window.onload = function() {
   allowButton.addEventListener("click", function(e) {
     allowWeather = true;
     getWeather();
+  });
+  dateSelector.addEventListener("click", function(e) {
+    getDate(0,0,0);
   });
 
   setInterval(getTime, 1000);
