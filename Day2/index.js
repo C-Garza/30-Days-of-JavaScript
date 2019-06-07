@@ -94,7 +94,7 @@ window.onload = function() {
     .then(response => {
       if(response.ok) {
         allowButton.style.display = "none";
-        weatherContainer.style.display = "block";
+        weatherContainer.style.display = "inline-block";
         return response.json()
       }
       else {
@@ -140,7 +140,7 @@ window.onload = function() {
     }
     else {
       isDegreeCelsius = true;
-      currentTemp = parseFloat((temp -32) * (5.0 * 9.0)).toFixed(2);
+      currentTemp = parseFloat((temp - 32) * (5.0/9.0)).toFixed(2);
       return currentTemp;
     }
   }
@@ -150,6 +150,11 @@ window.onload = function() {
   });
   dateSelector.addEventListener("click", function(e) {
     getDate(0,0,0);
+  });
+  weatherContainer.addEventListener("click", function(e) {
+    console.log("CLICK");
+    currentTemp = convertTemperature(currentTemp);
+    weatherStatus.children[0].textContent = currentTemp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
   });
 
   setInterval(getTime, 1000);

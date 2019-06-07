@@ -98,4 +98,5 @@ body {
 }
 .weather-container {
   display: none;
+  cursor: pointer;
 }
