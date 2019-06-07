@@ -108,7 +108,6 @@ button {
   color: white;
   width: 300px;
   height: 65px;
-  /* border: 2px solid #0D47A1; */
   border: 3px solid #212121;
   box-shadow: 0 2px 3px black;
   border-radius: 50px;
@@ -135,4 +134,60 @@ button {
 }
 .weather-icon img {
   width: 60px;
+}
+/*****MEDIA QUERIES*****/
+@media(max-width: 400px) {
+  body {
+    min-height: calc(100vh - 50px);
+  }
+  .date-container {
+    margin-top: 50px;
+  }
+  .weekday {
+    font-size: 4rem;
+  }
+  .date {
+    font-size: 2.5rem;
+  }
+  .clock {
+    width: 28rem;
+    height: 28rem;
+    margin: 25px auto;
+  }
+  #allow-weather {
+    width: 250px;
+    height: 60px;
+    font-size: 2.5rem;
+  }
+}
+@media(max-width: 300px) {
+  .weekday {
+    font-size: 3.5rem;
+  }
+  .date {
+    font-size: 2.2rem;
+  }
+  .clock {
+    width: 18rem;
+    height: 18rem;
+    border: 10px solid white;
+    border-radius: 50%;
+    margin: 25px auto;
+    padding: 2rem;
+  }
+  .hand {
+    height: 5px;
+  }
+  .midpoint {
+    width: 15px;
+    height: 15px;
+  }
+  #allow-weather {
+    width: 170px;
+    height: 45px;
+    font-size: 2rem;
+  }
+  .weather-container {
+    font-size: 2.4rem;
+  }
 }
