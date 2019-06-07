@@ -9,11 +9,21 @@ html {
 body {
   margin: 0;
   font-size: 2rem;
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 100px);
   align-items: center;
 }
 *, *:before, *:after {
   box-sizing: inherit;
+}
+button {
+  border: 0;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  cursor: pointer;
 }
 .date-container {
   width: 100%;
@@ -22,6 +32,8 @@ body {
   margin-top: 100px;
   font-family: "Lato";
   letter-spacing: 1px;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
 }
 .weekday {
   font-size: 6rem;
@@ -37,6 +49,7 @@ body {
 }
 .date p {
   margin: 0;
+  margin-bottom: 10px;
 }
 .clock {
   width: 38rem;
@@ -91,10 +104,22 @@ body {
   transform: translate(-50%, -50%);
 }
 #allow-weather {
-
+  background-color: #29B6F6;
+  color: white;
+  width: 300px;
+  height: 65px;
+  /* border: 2px solid #0D47A1; */
+  border: 3px solid #212121;
+  box-shadow: 0 2px 3px black;
+  border-radius: 50px;
+  font-size: 3rem;
+}
+#allow-weather:hover {
+  background-color: #0091EA;
 }
 .weather-container {
   display: none;
+  color: white;
   cursor: pointer;
   font-size: 2.8rem;
   font-family: "Lato";
