@@ -119,7 +119,7 @@ window.onload = function() {
       }
       cityName.children[0].textContent = data.name + ", " + data.sys.country;
       weatherStatus.children[0].textContent = currentTemp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
-      weatherIcon.children[0].src = data.weather[0].icon;
+      weatherIcon.children[0].src = (data.weather[0].icon === undefined) ? ("http://openweathermap.org/img/w/" + data.weather[1].icon + ".png") : data.weather[0].icon;
       weatherIcon.children[0].alt = data.weather[0].main;
     })
     .catch(error => {
