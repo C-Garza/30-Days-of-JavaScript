@@ -10,6 +10,7 @@ window.onload = function() {
   let weatherIcon = document.querySelector(".weather-icon");
   let optionsOne = {year: "numeric", month: "long", day: "numeric"};
   let optionsTwo = {year: "numeric", month: "numeric", day: "numeric"};
+  let currentTemp = 0;
   let isShortStyle = false;
   let isDegreeCelsius = true;
 
@@ -89,8 +90,12 @@ window.onload = function() {
       }
     })
     .then(data => {
+      currentTemp = data.main.temp;
+      if(!isDegreeCelsius) {
+        convertTemperature(currentTemp);
+      }
       cityName.children[0].textContent = data.name;
-      weatherStatus.children[0].textContent = data.main.temp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
+      weatherStatus.children[0].textContent = currentTemp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
       weatherIcon.children[0].src = data.weather[0].icon;
       weatherIcon.children[0].alt = data.weather[0].main;
     })
@@ -110,6 +115,18 @@ window.onload = function() {
     if(error.code === 3) {
       console.log("TIMEOUT");
       return;
+    }
+  }
+  function convertTemperature(temp) {
+    if(isDegreeCelsius) {
+      isDegreeCelsius = false;
+      currentTemp = parseFloat(temp * (9.0/5.0) + 32).toFixed(2);
+      return currentTemp;
+    }
+    else {
+      isDegreeCelsius = true;
+      currentTemp = parseFloat((temp -32) * (5.0 * 9.0)).toFixed(2);
+      return currentTemp;
     }
   }
   getWeather();
