@@ -34,6 +34,9 @@ window.onload = function() {
     if (hour > 12) {
       return (hour - 12);
     }
+    if(hour === 0) {
+      return (hour + 12);
+    }
     return hour;
   }
   ////GET TIME FOR CLOCKFACE
