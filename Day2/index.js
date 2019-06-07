@@ -1,12 +1,17 @@
 window.onload = function() {
+  let weahterAPI = "https://fcc-weather-api.glitch.me/api/current?";
   let secondHand = document.querySelector(".second-hand");
   let minuteHand = document.querySelector(".min-hand");
   let hourHand = document.querySelector(".hour-hand");
   let weekDay = document.querySelector(".weekday");
   let dateSelector = document.querySelector(".date");
-  let optionsOne = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
-  let optionsTwo = {weekday: "long", year: "numeric", month: "numeric", day: "numeric"};
+  let cityName = document.querySelector(".city-name");
+  let weatherStatus = document.querySelector(".weather-status");
+  let weatherIcon = document.querySelector(".weather-icon");
+  let optionsOne = {year: "numeric", month: "long", day: "numeric"};
+  let optionsTwo = {year: "numeric", month: "numeric", day: "numeric"};
   let isShortStyle = false;
+  let isDegreeCelsius = true;
 
   ////INIT
   getTime();
@@ -58,6 +63,56 @@ window.onload = function() {
     weekDay.children[0].textContent = start.toLocaleDateString("en-us", {weekday: "long"});
     dateSelector.children[0].textContent = start.toLocaleDateString("en-us", optionsOne);
   }
+  ////GET GEOLOCATION FOR WEATHER
+  function getWeather() {
+    if(navigator.geolocation) {
+      let location = navigator.geolocation;
+      location.getCurrentPosition((position) => {
+        let lat = "lat=" + position.coords.latitude;
+        let long = "lon=" + position.coords.longitude;
+        showWeather(lat, long);
+      }, handleGeolocationError, {timeout: 10000});
+    }
+    else {
+      console.log("Can't get Geolocation.");
+    }
+  }
+  function showWeather(lat, long) {
+    let api = weahterAPI + lat + "&" + long;
+    fetch(api)
+    .then(response => {
+      if(response.ok) {
+        return response.json()
+      }
+      else {
+        return Promise.reject(response.status);
+      }
+    })
+    .then(data => {
+      cityName.children[0].textContent = data.name;
+      weatherStatus.children[0].textContent = data.main.temp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
+      weatherIcon.children[0].src = data.weather[0].icon;
+      weatherIcon.children[0].alt = data.weather[0].main;
+    })
+    .catch(error => {
+      console.log("Fetch error, responded with error code: ", error);
+    });
+  }
+  function handleGeolocationError(error) {
+    if(error.code === 1) {
+      console.log("PERMISSION DENIED");
+      return;
+    }
+    if(error.code === 2) {
+      console.log("POSITION UNAVAILABLE");
+      return;
+    }
+    if(error.code === 3) {
+      console.log("TIMEOUT");
+      return;
+    }
+  }
+  getWeather();
 
   setInterval(getTime, 1000);
 };
