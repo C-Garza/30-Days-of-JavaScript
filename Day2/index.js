@@ -44,6 +44,7 @@ window.onload = function() {
     let start = new Date();
     let seconds = start.getSeconds();
     let minutes = start.getMinutes();
+    let dateHours = start.getHours();
     let hours = convertMilitaryTime(start.getHours());
     secondHand.style.transform = "rotate(" + getDegrees(seconds) + "deg)";
     minuteHand.style.transform = "rotate(" + getDegrees(minutes) + "deg)";
@@ -58,7 +59,7 @@ window.onload = function() {
       minuteHand.offsetHeight;
       minuteHand.classList.remove("no-transition");
     }
-    if(hours === 0) {
+    if(dateHours === 0) {
       hourHand.classList.add("no-transition");
       hourHand.offsetHeight;
       hourHand.classList.remove("no-transition");
