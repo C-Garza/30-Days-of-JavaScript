@@ -16,8 +16,10 @@ window.onload = function() {
   let isShortStyle = false;
   let isDegreeCelsius = true;
   let allowWeather = false;
+  let prevHour = new Date().getHours();
 
   ////INIT
+  prevHour = convertMilitaryTime(prevHour);
   getTime();
   getDate(0,0,0);
   ////GET DEGREES TRAVELED
@@ -59,6 +61,10 @@ window.onload = function() {
       hourHand.classList.remove("no-transition");
     }
     getDate(seconds, minutes, hours);
+    if(allowWeather && (prevHour !== hours)) {
+      getWeather();
+    }
+    prevHour = hours;
   }
   ////GET DATE
   function getDate(second, min, hour) {
@@ -88,6 +94,7 @@ window.onload = function() {
       console.log("Can't get Geolocation.");
     }
   }
+  ////FETCH WEATHER API DATA AND DISPLAY IT
   function showWeather(lat, long) {
     let api = weahterAPI + lat + "&" + long;
     fetch(api)
@@ -117,6 +124,7 @@ window.onload = function() {
       console.log("Fetch error, responded with error code: ", error);
     });
   }
+  ////HANDLE ERRORS THROWN BY API FETCH
   function handleGeolocationError(error) {
     allowWeather = false;
     if(error.code === 1) {
@@ -132,6 +140,7 @@ window.onload = function() {
       return;
     }
   }
+  ////CONVERT BETWEEN CELSIUS AND FAHRENHEIT
   function convertTemperature(temp) {
     if(isDegreeCelsius) {
       isDegreeCelsius = false;
@@ -144,6 +153,7 @@ window.onload = function() {
       return currentTemp;
     }
   }
+  ////EVENT LISTENERS
   allowButton.addEventListener("click", function(e) {
     allowWeather = true;
     getWeather();
@@ -152,7 +162,6 @@ window.onload = function() {
     getDate(0,0,0);
   });
   weatherContainer.addEventListener("click", function(e) {
-    console.log("CLICK");
     currentTemp = convertTemperature(currentTemp);
     weatherStatus.children[0].textContent = currentTemp + "\u00B0" + (isDegreeCelsius ? "C" : "F");
   });
