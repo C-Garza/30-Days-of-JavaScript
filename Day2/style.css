@@ -34,6 +34,9 @@ body {
 }
 .date {
   font-size: 3.5rem;
+  margin: auto;
+  display: inline-block;
+  cursor: pointer;
 }
 .date p {
   margin: 0;
@@ -89,4 +92,10 @@ body {
   left: 50%;
   top: 50.5%;
   transform: translate(-50%, -50%);
+}
+#allow-weather {
+
+}
+.weather-container {
+  display: none;
 }
