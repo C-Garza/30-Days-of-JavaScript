@@ -7,9 +7,10 @@ window.onload = function() {
   let optionsOne = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
   let optionsTwo = {weekday: "long", year: "numeric", month: "numeric", day: "numeric"};
   let isShortStyle = false;
+
   ////INIT
   getTime();
-
+  getDate(0,0,0);
   ////GET DEGREES TRAVELED
   function getDegrees(time, hour) {
     if(hour) {
@@ -48,18 +49,15 @@ window.onload = function() {
       hourHand.offsetHeight;
       hourHand.classList.remove("no-transition");
     }
-    // getDate();
-    // console.log(getDegrees(minutes, hours));
+    getDate(seconds, minutes, hours);
   }
   ////GET DATE
   function getDate(second, min, hour) {
-    if((hour && min && second) !== 0) return;
+    if(second !== 0 || min !== 0 || hour !== 0) return;
     let start = new Date();
     weekDay.children[0].textContent = start.toLocaleDateString("en-us", {weekday: "long"});
     dateSelector.children[0].textContent = start.toLocaleDateString("en-us", optionsOne);
-    // console.log(new Date().toLocaleDateString("en-us", optionsOne));
   }
-  getDate(0, 0, 0);
 
   setInterval(getTime, 1000);
 };
