@@ -28,8 +28,13 @@ window.onload = function() {
     return person.first + " " + person.last;
   });
   console.table(names);
+
   // Array.prototype.sort()
   // 3. Sort the inventors by birthdate, oldest to youngest
+  let sortByOldest = inventors.sort((a,b) => {
+    return a.year - b.year;
+  });
+  console.table(sortByOldest);
 
   // Array.prototype.reduce()
   // 4. How many years did all the inventors live?
