@@ -38,12 +38,26 @@ window.onload = function() {
 
   // Array.prototype.reduce()
   // 4. How many years did all the inventors live?
+  let totalYearsLived = inventors.reduce((acc, currentValue) => {
+    return acc + (currentValue.passed - currentValue.year);
+  }, 0);
+  console.log("TOTAL YEARS LIVED: " + totalYearsLived);
 
   // 5. Sort the inventors by years lived
+  let yearsLived = inventors.sort((a,b) => {
+    return (b.passed - b.year) - (a.passed - a.year);
+  });
+  console.table(yearsLived);
 
   // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
   // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+  let wikiAPI = "https://en.wikipedia.org/w/api.php?&action=query&format=json&origin=*&list=categorymembers&cmtitle=category%3A%20Boulevards%20in%20Paris&cmlimit=50";
+  fetch(wikiAPI)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.query.categorymembers);
+  })
+  .catch(error => console.log('Error is', error));
 
   // 7. sort Exercise
   // Sort the people alphabetically by last name
