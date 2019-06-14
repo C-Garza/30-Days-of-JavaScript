@@ -85,5 +85,15 @@ window.onload = function() {
   // 8. Reduce Exercise
   // Sum up the instances of each of these
   const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+  let total = data.reduce((acc, currentValue) => {
+    if(currentValue in acc) {
+      acc[currentValue]++;
+    }
+    else {
+      acc[currentValue] = 1;
+    }
+    return acc;
+  }, {});
+  console.table(total);
 
 };
