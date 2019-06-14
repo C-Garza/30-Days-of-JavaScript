@@ -1,0 +1,52 @@
+html {
+  height: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+p {
+  margin-left: 10px;
+}
+table {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px 25px;
+  border-collapse: collapse;
+}
+caption {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+thead {
+  text-align: left;
+}
+th {
+  padding: 5px;
+  min-width: 50px;
+}
+tr {
+  outline: thin solid black;
+  cursor: default;
+}
+tbody tr:hover {
+  background-color: #BBDEFB;
+}
+td {
+  padding: 5px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+td:first-child {
+  border-left: none;
+}
+td:last-child {
+  border-right: none;
+}
