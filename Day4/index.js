@@ -15,6 +15,65 @@ window.onload = function() {
     { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
   ];
   const people = ['Beck, Glenn', 'Zebra, Animal', 'Armadillo, Animal', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+  function createTable(arr, headers) {
+    if(arr.constructor !== Array) return;
+    if(arr.length === 0) return;
+    let innerObject = Object.keys(arr[0]);
+    let isString = false;
+    if(typeof arr[0] === "string") {
+      isString = true;
+    }
+    let table = document.createElement("table");
+    let tableHead = document.createElement("thead");
+    table.appendChild(tableHead);
+    if(!headers) {
+      let tr = document.createElement("tr");
+      for(let i = 0; i < innerObject.length; i++) {
+        let th = document.createElement("th");
+        let capitalize = innerObject[i].charAt(0).toUpperCase() + innerObject[i].slice(1);
+        let text = document.createTextNode(capitalize);
+        th.appendChild(text);
+        tr.appendChild(th);
+      }
+      tableHead.appendChild(tr);
+    }
+    else {
+      let tr = document.createElement("tr");
+      let th = document.createElement("th");
+      let text = document.createTextNode(headers);
+      th.appendChild(text);
+      tr.appendChild(th);
+      tableHead.appendChild(tr);
+    }
+    let tableBody = document.createElement("tbody");
+    table.appendChild(tableBody);
+    if(isString) {
+      for(let i = 0; i < arr.length; i++) {
+        let tr = document.createElement("tr");
+        let td = document.createElement("td");
+        let text = document.createTextNode(arr[i]);
+        td.appendChild(text);
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+      }
+    }
+    else {
+      for(let i = 0; i < arr.length; i++) {
+        let tr = document.createElement("tr");
+        Object.keys(arr[i]).forEach(key => {
+          let td = document.createElement("td");
+          let text = document.createTextNode(arr[i][key]);
+          td.appendChild(text);
+          tr.appendChild(td);
+        });
+        tableBody.appendChild(tr);
+      }
+    }
+    isString = false;
+    document.body.appendChild(table);
+  }
+  createTable(inventors);
+
   // Array.prototype.filter()
   // 1. Filter the list of inventors for those who were born in the 1500's
   let bornIn1500s = inventors.filter(person => {
@@ -28,6 +87,7 @@ window.onload = function() {
     return person.first + " " + person.last;
   });
   console.table(names);
+  createTable(names, "Inventor Names");
 
   // Array.prototype.sort()
   // 3. Sort the inventors by birthdate, oldest to youngest
@@ -35,6 +95,7 @@ window.onload = function() {
     return a.year - b.year;
   });
   console.table(sortByOldest);
+  createTable(sortByOldest);
 
   // Array.prototype.reduce()
   // 4. How many years did all the inventors live?
@@ -48,6 +109,7 @@ window.onload = function() {
     return (b.passed - b.year) - (a.passed - a.year);
   });
   console.table(yearsLived);
+  createTable(yearsLived);
 
   // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
   // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -56,12 +118,17 @@ window.onload = function() {
   .then(response => response.json())
   .then(data => {
     let streets = data.query.categorymembers;
+    let streetsTable = streets.map(link => {
+      return link.title;
+    });
     let de = streets.map(link => {
       return link.title;
     })
     .filter(street => {
       return street.includes("de");
     });
+    createTable(streetsTable, "List of Paris Boulevards");
+    createTable(de, "List of Paris Boulevards containing 'de'")
     console.table(streets, ["title"]);
     console.table(de);
   })
@@ -72,7 +139,6 @@ window.onload = function() {
   let sortByLast = people.sort((a,b) => {
     let aLast = a.toLowerCase();
     let bLast = b.toLowerCase();
-    console.log(aLast);
     return aLast < bLast ? -1 : 1;
   });
   console.log(sortByLast);
@@ -81,6 +147,7 @@ window.onload = function() {
     return a.localeCompare(b);
   });
   console.log(newSortByLast);
+  createTable(newSortByLast, "Sorted Alphabetically by Last Name");
 
   // 8. Reduce Exercise
   // Sum up the instances of each of these
@@ -95,5 +162,7 @@ window.onload = function() {
     return acc;
   }, {});
   console.table(total);
+  createTable(data, "List of Vehicles");
+  createTable([total]);
 
 };
