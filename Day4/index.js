@@ -55,7 +55,18 @@ window.onload = function() {
   fetch(wikiAPI)
   .then(response => response.json())
   .then(data => {
-    console.log(data.query.categorymembers);
+    let streets = data.query.categorymembers;
+    let de = streets.map(link => {
+      return link.title;
+    })
+    .filter(street => {
+      return street.includes("de");
+    });
+    // let de = streets.filter(street => {
+    //   return street.title.includes("de");
+    // });
+    console.table(streets, ["title"]);
+    console.table(de);
   })
   .catch(error => console.log('Error is', error));
 
