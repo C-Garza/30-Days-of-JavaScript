@@ -15,7 +15,7 @@ window.onload = function() {
     { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
   ];
   const people = ['Beck, Glenn', 'Zebra, Animal', 'Armadillo, Animal', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
-  function createTable(arr, headers) {
+  function createTable(arr, headers, description) {
     if(arr.constructor !== Array) return;
     if(arr.length === 0) return;
     let innerObject = Object.keys(arr[0]);
@@ -25,7 +25,16 @@ window.onload = function() {
     }
     let table = document.createElement("table");
     let tableHead = document.createElement("thead");
-    table.appendChild(tableHead);
+    if(description) {
+      let caption = document.createElement("caption");
+      let text = document.createTextNode(description);
+      caption.appendChild(text);
+      table.appendChild(caption);
+      table.appendChild(tableHead);
+    }
+    else {
+      table.appendChild(tableHead);
+    }
     if(!headers) {
       let tr = document.createElement("tr");
       for(let i = 0; i < innerObject.length; i++) {
@@ -72,7 +81,7 @@ window.onload = function() {
     isString = false;
     document.body.appendChild(table);
   }
-  createTable(inventors);
+  createTable(inventors, false, "List of Inventors");
 
   // Array.prototype.filter()
   // 1. Filter the list of inventors for those who were born in the 1500's
@@ -80,6 +89,7 @@ window.onload = function() {
     return person.year <= 1599 && person.year >= 1500;
   });
   console.table(bornIn1500s);
+  createTable(bornIn1500s, false, "Inventors born in 16th century");
 
   // Array.prototype.map()
   // 2. Give us an array of the inventors' first and last names
@@ -95,7 +105,7 @@ window.onload = function() {
     return a.year - b.year;
   });
   console.table(sortByOldest);
-  createTable(sortByOldest);
+  createTable(sortByOldest, false, "Sorted by birthdate, oldest to newest");
 
   // Array.prototype.reduce()
   // 4. How many years did all the inventors live?
@@ -109,7 +119,7 @@ window.onload = function() {
     return (b.passed - b.year) - (a.passed - a.year);
   });
   console.table(yearsLived);
-  createTable(yearsLived);
+  createTable(yearsLived, false, "Sorted by oldest to youngest");
 
   // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
   // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -163,6 +173,6 @@ window.onload = function() {
   }, {});
   console.table(total);
   createTable(data, "List of Vehicles");
-  createTable([total]);
+  createTable([total], false, "Total instances of word in 'List of Vehicles'");
 
 };
