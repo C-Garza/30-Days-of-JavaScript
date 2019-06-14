@@ -14,7 +14,7 @@ window.onload = function() {
     { first: 'Lise', last: 'Meitner', year: 1878, passed: 1968 },
     { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
   ];
-  const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+  const people = ['Beck, Glenn', 'Zebra, Animal', 'Armadillo, Animal', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
   // Array.prototype.filter()
   // 1. Filter the list of inventors for those who were born in the 1500's
   let bornIn1500s = inventors.filter(person => {
@@ -62,9 +62,6 @@ window.onload = function() {
     .filter(street => {
       return street.includes("de");
     });
-    // let de = streets.filter(street => {
-    //   return street.title.includes("de");
-    // });
     console.table(streets, ["title"]);
     console.table(de);
   })
@@ -72,6 +69,18 @@ window.onload = function() {
 
   // 7. sort Exercise
   // Sort the people alphabetically by last name
+  let sortByLast = people.sort((a,b) => {
+    let aLast = a.toLowerCase();
+    let bLast = b.toLowerCase();
+    console.log(aLast);
+    return aLast < bLast ? -1 : 1;
+  });
+  console.log(sortByLast);
+  //BETTER WAY
+  let newSortByLast = people.sort((a,b) => {
+    return a.localeCompare(b);
+  });
+  console.log(newSortByLast);
 
   // 8. Reduce Exercise
   // Sum up the instances of each of these
