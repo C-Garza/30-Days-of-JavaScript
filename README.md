@@ -5,3 +5,4 @@ The GitHub for that challenge can be found here: https://github.com/wesbos/JavaS
 [Day 2](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day2): JavaScript clock with local weather. <br />
 [Day 3](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day3): CSS variable practice. <br />
 [Day 4](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day4): Array method practice: Filter, map, sort, and reduce. <br />
+[Day 5](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day5): CSS Flex practice. <br />
