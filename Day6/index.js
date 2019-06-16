@@ -18,8 +18,29 @@ window.onload = function() {
       });
     }
     function displayMatches() {
+      if(document.querySelectorAll(".suggestions li").length > 2) {
+        Array.from(document.querySelectorAll(".suggestions li")).slice(2).forEach(li => {
+          li.remove();
+        });
+      }
+      if(this.value.trim() === "") return;
       let matchArr = findMatches(this.value, cities);
-      console.log(matchArr);
+      let fragment = document.createDocumentFragment();
+      matchArr.forEach(place => {
+        let li = document.createElement("li");
+        let spanName = document.createElement("span");
+        let spanPop = document.createElement("span");
+        let nameText = document.createTextNode(place.city + ", " + place.state);
+        let popText = document.createTextNode(place.population);
+        spanName.classList.add("name");
+        spanPop.classList.add("population");
+        spanName.appendChild(nameText);
+        spanPop.appendChild(popText);
+        li.appendChild(spanName);
+        li.appendChild(spanPop);
+        fragment.appendChild(li);
+      });
+      suggestions.appendChild(fragment);
     }
     searchInput.addEventListener("input", displayMatches);
 };
