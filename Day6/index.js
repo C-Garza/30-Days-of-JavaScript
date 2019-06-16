@@ -18,29 +18,28 @@ window.onload = function() {
       });
     }
     function displayMatches() {
-      if(document.querySelectorAll(".suggestions li").length > 2) {
-        Array.from(document.querySelectorAll(".suggestions li")).slice(2).forEach(li => {
+      if(document.querySelectorAll(".suggestions li").length >= 0) {
+        Array.from(document.querySelectorAll(".suggestions li")).forEach(li => {
           li.remove();
         });
       }
-      if(this.value.trim() === "") return;
+      if(this.value.trim() === "") {
+        suggestions.innerHTML = "<li>Filter for a city</li><li>Or a State</li>";
+        return;
+      }
       let matchArr = findMatches(this.value, cities);
-      let fragment = document.createDocumentFragment();
-      matchArr.forEach(place => {
-        let li = document.createElement("li");
-        let spanName = document.createElement("span");
-        let spanPop = document.createElement("span");
-        let nameText = document.createTextNode(place.city + ", " + place.state);
-        let popText = document.createTextNode(place.population);
-        spanName.classList.add("name");
-        spanPop.classList.add("population");
-        spanName.appendChild(nameText);
-        spanPop.appendChild(popText);
-        li.appendChild(spanName);
-        li.appendChild(spanPop);
-        fragment.appendChild(li);
-      });
-      suggestions.appendChild(fragment);
+      let regex = new RegExp(this.value, "gi");
+      let listOfCities = matchArr.map(place => {
+        let cityName = place.city.replace(regex, "<span class='hl'>" + this.value + "</span>");
+        let stateName = place.state.replace(regex, "<span class='hl'>" + this.value + "</span>");
+        return `
+          <li>
+            <span class="name">${cityName}, ${stateName}</span>
+            <span class="population">${parseInt(place.population, 10).toLocaleString()}</span>
+          </li>
+        `
+      }).join("");
+      suggestions.innerHTML = listOfCities;
     }
     searchInput.addEventListener("input", displayMatches);
 };
