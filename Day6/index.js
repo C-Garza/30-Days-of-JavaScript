@@ -3,6 +3,11 @@ window.onload = function() {
   let cities = [];
   let searchInput = document.querySelector(".search");
   let suggestions = document.querySelector(".suggestions");
+  let weahterAPI = "https://fcc-weather-api.glitch.me/api/current?";
+  let currentTemp = "";
+  let previousCity = "";
+  let previousState = "";
+  let prevTemp = "";
   fetch(endpoint)
     .then(response => response.json())
     .then(data => {
@@ -29,7 +34,7 @@ window.onload = function() {
       }
       let matchArr = findMatches(this.value, cities);
       let regex = new RegExp(this.value, "gi");
-      let listOfCities = matchArr.map(place => {
+      let listOfCities = matchArr.map((place, i) => {
         let cityName = place.city.replace(regex, "<span class='hl'>" + this.value + "</span>");
         let stateName = place.state.replace(regex, "<span class='hl'>" + this.value + "</span>");
         return `
@@ -40,6 +45,44 @@ window.onload = function() {
         `
       }).join("");
       suggestions.innerHTML = listOfCities;
+      let lat = "lat=" + parseFloat(matchArr[0].latitude);
+      let long = "lon=" + parseFloat(matchArr[0].longitude);
+      if(previousCity === matchArr[0].city && previousState === matchArr[0].state) {
+        suggestions.children[0].appendChild(prevTemp);
+        return;
+      }
+      showWeather(lat, long);
+      previousCity = matchArr[0].city;
+      previousState = matchArr[0].state;
+    }
+    function showWeather(lat, long) {
+      let api = weahterAPI + lat + "&" + long;
+      fetch(api)
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        }
+        else {
+          return Promise.reject(response.status);
+        }
+      })
+      .then(data => {
+        currentTemp = data.main.temp;
+        convertTemperature(currentTemp);
+        let span = document.createElement("span");
+        let text = document.createTextNode(currentTemp + "\u00B0 F");
+        span.classList.add("weather");
+        span.appendChild(text);
+        prevTemp = span;
+        suggestions.children[0].appendChild(span);
+      })
+      .catch(error => {
+        console.log("Fetch error, responded with error code: ", error);
+      });
+    }
+    function convertTemperature(temp) {
+      currentTemp = parseFloat(temp * (9.0/5.0) + 32).toFixed(2);
+      return currentTemp;
     }
     searchInput.addEventListener("input", displayMatches);
 };
