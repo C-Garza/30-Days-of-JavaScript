@@ -20,11 +20,22 @@ window.onload = function() {
     ctx.strokeStyle = "hsl(" + hue + ", 100%, 50%)";
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
+    if(e.targetTouches) {
+      ctx.lineTo(e.targetTouches[0].pageX, e.targetTouches[0].pageY);
+    }
+    else {
+      ctx.lineTo(e.offsetX, e.offsetY);
+    }
     ctx.stroke();
 
-    lastX = e.offsetX;
-    lastY = e.offsetY;
+    if(e.targetTouches) {
+      lastX = e.targetTouches[0].pageX;
+      lastY = e.targetTouches[0].pageY;
+    }
+    else {
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+    }
     hue++;
     if(hue >= 360) {
       hue = 0;
@@ -40,6 +51,7 @@ window.onload = function() {
     }
   }
 
+  //EVENT LISTENERS FOR MOUSE
   canvas.addEventListener("mousemove", draw);
   canvas.addEventListener("mousedown", (e) => {
     isDrawing = true
@@ -48,5 +60,15 @@ window.onload = function() {
   });
   canvas.addEventListener("mouseup", () => isDrawing = false);
   canvas.addEventListener("mouseout", () => isDrawing = false);
+  //EVENT LISTENERS FOR TOUCH
+  canvas.addEventListener("touchmove", draw);
+  canvas.addEventListener("touchstart", (e) => {
+    isDrawing = true;
+    lastX = e.targetTouches[0].pageX;
+    lastY = e.targetTouches[0].pageY;
+  });
+  canvas.addEventListener("touchend", () => isDrawing = false);
+  canvas.addEventListener("touchcancel", () => isDrawing = false);
+
   clearButton.addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 };
