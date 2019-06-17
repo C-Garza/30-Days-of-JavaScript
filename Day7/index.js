@@ -13,8 +13,14 @@ window.onload = function() {
     { text: 'Ramen is my fav food ever', id: 123523 },
     { text: 'Nice Nice Nice!', id: 542328 }
   ];
+  let currentYear = new Date().getFullYear();
+  
   // Some and Every Checks
   // Array.prototype.some() // is at least one person 19 or older?
+  let isOver19 = people.some((person) => {
+    return currentYear - person.year >= 19;
+  });
+  console.log({isOver19});
   // Array.prototype.every() // is everyone 19 or older?
 
   // Array.prototype.find()
