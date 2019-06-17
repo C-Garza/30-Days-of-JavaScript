@@ -11,3 +11,21 @@ body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+button {
+  position: absolute;
+  border: 0;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  cursor: pointer;
+  width: 200px;
+  height: 50px;
+  border: 3px solid #212121;
+  box-shadow: 0 2px 3px black;
+  border-radius: 50px;
+  font-size: 1.5rem;
+  user-select: none;
+}

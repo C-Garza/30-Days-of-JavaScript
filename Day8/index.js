@@ -1,5 +1,6 @@
 window.onload = function() {
-  let canvas = document.querySelector("#draw");
+  let canvas = document.getElementById("draw");
+  let clearButton = document.getElementById("clear");
   let ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -47,4 +48,5 @@ window.onload = function() {
   });
   canvas.addEventListener("mouseup", () => isDrawing = false);
   canvas.addEventListener("mouseout", () => isDrawing = false);
+  clearButton.addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 };
