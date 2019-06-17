@@ -33,6 +33,7 @@ window.onload = function() {
         return;
       }
       let matchArr = findMatches(this.value, cities);
+      if(matchArr.length === 0) return;
       let regex = new RegExp(this.value, "gi");
       let listOfCities = matchArr.map((place, i) => {
         let cityName = place.city.replace(regex, "<span class='hl'>" + this.value + "</span>");
