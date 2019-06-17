@@ -14,14 +14,19 @@ window.onload = function() {
     { text: 'Nice Nice Nice!', id: 542328 }
   ];
   let currentYear = new Date().getFullYear();
-  
+
   // Some and Every Checks
   // Array.prototype.some() // is at least one person 19 or older?
   let isOver19 = people.some((person) => {
     return currentYear - person.year >= 19;
   });
   console.log({isOver19});
+
   // Array.prototype.every() // is everyone 19 or older?
+  let isEveryOver19 = people.every(person => {
+    return currentYear - person.year >= 19;
+  });
+  console.log({isEveryOver19});
 
   // Array.prototype.find()
   // Find is like filter, but instead returns just the one you are looking for
