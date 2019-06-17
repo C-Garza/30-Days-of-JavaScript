@@ -1,3 +1,5 @@
+//CREATES TABLE FROM ARRAYS AND ATTACHES IT TO THE BODY. arr IS ARRAY, headers IS USED IF arr IS NOT AN ARRAY OF OBJECTS OTHERWISE FALSE,
+//description ADDS CAPTION TO TABLE.
 function createTable(arr, headers, description) {
   if(arr.constructor !== Array) return;
   if(arr.length === 0) return;
