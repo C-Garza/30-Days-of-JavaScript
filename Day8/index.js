@@ -2,8 +2,8 @@ window.onload = function() {
   let canvas = document.getElementById("draw");
   let clearButton = document.getElementById("clear");
   let ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth - 4;
+  canvas.height = window.innerHeight - 4;
   ctx.strokeStyle = "#BADA55";
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
@@ -21,6 +21,7 @@ window.onload = function() {
   function draw(e) {
     if(!isDrawing) return;
     ctx.strokeStyle = "hsl(" + hue + ", 100%, 50%)";
+    clearButton.style.backgroundColor = "hsl(" + hue + ", 100%, 50%)";
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
     if(e.targetTouches) {
@@ -53,12 +54,13 @@ window.onload = function() {
       ctx.lineWidth--;
     }
   }
+  //SAVE OLD CANVAS AND REDRAW ON NEW SIZED CANVAS
   function resizeCanvas() {
     savedCanvas.width = canvas.width;
     savedCanvas.height = canvas.height;
     savedCtx.drawImage(canvas, 0, 0);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth - 4;
+    canvas.height = window.innerHeight - 4;
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.drawImage(savedCanvas, 0 , 0);
