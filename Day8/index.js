@@ -8,12 +8,15 @@ window.onload = function() {
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
   ctx.lineWidth = 100;
+  let savedCanvas = document.createElement("canvas");
+  let savedCtx = savedCanvas.getContext("2d");
 
   let isDrawing = false;
   let lastX = 0;
   let lastY = 0;
   let hue = 0;
   let direction = true;
+  let stopResize = "";
 
   function draw(e) {
     if(!isDrawing) return;
@@ -50,6 +53,16 @@ window.onload = function() {
       ctx.lineWidth--;
     }
   }
+  function resizeCanvas() {
+    savedCanvas.width = canvas.width;
+    savedCanvas.height = canvas.height;
+    savedCtx.drawImage(canvas, 0, 0);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.drawImage(savedCanvas, 0 , 0);
+  }
 
   //EVENT LISTENERS FOR MOUSE
   canvas.addEventListener("mousemove", draw);
@@ -69,6 +82,11 @@ window.onload = function() {
   });
   canvas.addEventListener("touchend", () => isDrawing = false);
   canvas.addEventListener("touchcancel", () => isDrawing = false);
+  //RESIZE CANVAS
+  window.addEventListener("resize", () => { 
+    clearTimeout(stopResize);
+    stopResize = setTimeout(resizeCanvas, 250);
+  });
 
   clearButton.addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 };
