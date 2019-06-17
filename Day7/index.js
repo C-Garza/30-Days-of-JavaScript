@@ -15,6 +15,8 @@ window.onload = function() {
     { text: 'Nice Nice Nice!', id: 542328 }
   ];
   let currentYear = new Date().getFullYear();
+  createTable(people, false, "Initial List of People");
+  createTable(comments, false, "Initial List of Comments");
 
   // Some and Every Checks
   // Array.prototype.some() // is at least one person 19 or older?
@@ -51,6 +53,8 @@ window.onload = function() {
     ...comments.slice(0, findCommentIndex),
     ...comments.slice(findCommentIndex + 1)
   ];
+  createTable(newComments, false, "List of Comments After Removing ID 823423");
+  createTable(comments, false, "Comments List Kept Immutable");
   console.table(newComments);
   console.table(comments);
 
