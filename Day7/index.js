@@ -1,3 +1,4 @@
+import {createTable} from "../helper-functions/functions.js";
 window.onload = function() {
   // ## Array Cardio Day 2
   const people = [
@@ -39,5 +40,18 @@ window.onload = function() {
   // Array.prototype.findIndex()
   // Find the comment with this ID
   // delete the comment with the ID of 823423
+  let findCommentIndex = comments.findIndex(comment => {
+    return comment.id === 823423;
+  });
+  console.log(findCommentIndex);
+  // comments.splice(findCommentIndex,1);
+  // console.table(comments);
+  //OR ANOTHER WAY KEEPING BOTH ARRAYS INTACT (KEEPING THE COMMENTS ARRAY IMMUTABLE)
+  let newComments = [
+    ...comments.slice(0, findCommentIndex),
+    ...comments.slice(findCommentIndex + 1)
+  ];
+  console.table(newComments);
+  console.table(comments);
 
 };
