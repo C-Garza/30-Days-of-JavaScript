@@ -9,3 +9,4 @@ The GitHub for that challenge can be found here: https://github.com/wesbos/JavaS
 [Day 5](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day5): CSS Flex practice. <br />
 [Day 6](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day6): Ajax practice with cities and weather. <br />
 [Day 7](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day7): Array method practice: Some, every, find, findIndex. Imports createTable from [helper-functions](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/helper-functions). <br />
+[Day 8](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day8): HTML5 Canvas mouse drawing practice. Works on mobile too! <br />
