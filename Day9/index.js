@@ -17,10 +17,13 @@ window.onload = function() {
   console.log(`Hello I am a ${stringVar} string!`);
 
   // Styled
+  console.log("%c I am some great text", "font-size:50px; color: red;");
 
   // warning!
+  console.warn("OH NOOO!");
 
   // Error :|
+  console.error("Shoot!");
 
   // Info
 
