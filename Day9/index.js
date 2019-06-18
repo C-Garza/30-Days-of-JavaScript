@@ -26,10 +26,15 @@ window.onload = function() {
   console.error("Shoot!");
 
   // Info
+  console.info("Crocodiles eat 3-4 people per year");
 
   // Testing
+  let p = document.querySelector("p");
+  console.assert(1 === 2, "That is wrong!");
+  console.assert(p.classList.contains("ouch"), "That is wrong!");
 
   // clearing
+  console.clear();
 
   // Viewing DOM Elements
 
