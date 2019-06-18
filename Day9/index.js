@@ -1,5 +1,6 @@
 window.onload = function() {
   const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+  let stringVar = "new";
 
   function makeGreen() {
     const p = document.querySelector('p');
@@ -9,8 +10,11 @@ window.onload = function() {
   document.querySelector("p").onclick = makeGreen;
 
   // Regular
+  console.log("hello");
 
   // Interpolated
+  console.log("Hello I am a %s string!", "new");
+  console.log(`Hello I am a ${stringVar} string!`);
 
   // Styled
 
