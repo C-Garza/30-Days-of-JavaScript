@@ -6,6 +6,7 @@ window.onload = function() {
     p.style.color = '#BADA55';
     p.style.fontSize = '50px';
   }
+  document.querySelector("p").onclick = makeGreen;
 
   // Regular
 
