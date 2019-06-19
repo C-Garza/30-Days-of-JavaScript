@@ -6,8 +6,9 @@ window.onload = function() {
   
   function shiftSelect(e) {
     let firstCheck = false;
+    let firstCheckedIndex = Array.from(checkBoxes).indexOf(checkedBoxes[0])
     let lastCheckedIndex = Array.from(checkBoxes).indexOf(checkedBoxes[checkedBoxes.length - 1]);
-    for(let i = 0; i < checkBoxes.length; i++) {
+    for(let i = firstCheckedIndex; i < checkBoxes.length; i++) {
       if(checkBoxes[i].checked === true && !firstCheck) {
         firstCheck = true;
       }
