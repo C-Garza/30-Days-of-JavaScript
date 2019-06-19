@@ -2,6 +2,7 @@ window.onload = function() {
   let checkBoxes = document.querySelectorAll(".item input");
   let checkedBoxes = document.querySelectorAll(".item input:checked");
   let inbox = document.querySelector(".inbox");
+  let shiftKey = false;
   
   function shiftSelect(e) {
     let firstCheck = false;
@@ -19,14 +20,20 @@ window.onload = function() {
     }
   }
 
+  //////SHIFT-CLICK LABEL IN FIREFOX DOES NOT TRIGGER CHECKBOX, SEE https://bugzilla.mozilla.org/show_bug.cgi?id=559506
   inbox.addEventListener("click", (e) => {
-    if(event.target.tagName === "LABEL") {
+    if(e.target.tagName === "LABEL") { ////CLICK ON LABEL TRIGGERS INPUT CLICK
+      e.preventDefault();
+      if(e.shiftKey) {
+        shiftKey = true;  ////SHIFT-KEY DOES NOT PROPAGATE IN EDGE OR FIREFOX
+      }
+      e.target.parentNode.children[0].click();
       return;
     }
     checkedBoxes = Array.from(document.querySelectorAll(".item input:checked"));
-    console.log(e.target); //HAS shiftKey PROPERTY
-    if(e.shiftKey && (checkedBoxes.length > 1) && e.target.checked) {
+    if((e.shiftKey || shiftKey) && (checkedBoxes.length > 1) && e.target.checked) {
       shiftSelect(e);
+      shiftKey = false;
     }
   });
 };
