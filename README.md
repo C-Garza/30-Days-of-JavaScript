@@ -12,3 +12,4 @@ The GitHub for that challenge can be found here: https://github.com/wesbos/JavaS
 [Day 8](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day8): HTML5 Canvas mouse drawing practice. Works on mobile too! <br />
 [Day 9](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day9): Dev tools console commands practice. <br />
 [Day 10](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day10): Shift-click to check multiple checkboxes. Firefox does not like shift-click on labels :pensive: <br />
+[Day 11](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day11): HTML5 video player practice. <br />
