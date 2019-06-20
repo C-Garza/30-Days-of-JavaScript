@@ -15,10 +15,16 @@ window.onload = function() {
       video.pause();
     }
   }
+  function updateButton() {
+    let icon = this.paused ? "►" : "❚ ❚";
+    toggle.textContent = icon;
+  }
 
   player.addEventListener("click", (e) => {
     if(e.target === toggle || e.target === video) {
       togglePlay();
     }
   });
+  video.addEventListener("play", updateButton);
+  video.addEventListener("pause", updateButton);
 };
