@@ -6,6 +6,7 @@ window.onload = function() {
   let toggle = player.querySelector(".toggle");
   let ranges = player.querySelectorAll(".player__slider");
   let skipButtons = player.querySelectorAll("[data-skip]");
+  let mousedown = false;
 
   function togglePlay() {
     if(video.paused) {
@@ -29,10 +30,17 @@ window.onload = function() {
     let percent = (video.currentTime / video.duration) * 100;
     progressBar.style.flexBasis = percent + "%";
   }
+  function scrub(e) {
+    let scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+    video.currentTime = scrubTime;
+  }
 
   player.addEventListener("click", (e) => {
     if(e.target === toggle || e.target === video) {
       togglePlay();
+    }
+    if(e.target === progress || e.target === progressBar) {
+      scrub(e);
     }
     skipButtons.forEach(button => {
       if(e.target === button) {
@@ -43,5 +51,13 @@ window.onload = function() {
   video.addEventListener("play", updateButton);
   video.addEventListener("pause", updateButton);
   video.addEventListener("timeupdate", handleProgress);
+  progress.addEventListener("mousemove", (e) => {
+    if(mousedown) {
+      scrub(e);
+    }
+  });
+  progress.addEventListener("mousedown", () => mousedown = true);
+  progress.addEventListener("mouseup", () => mousedown = false);
+  progress.addEventListener("mouseout", () => mousedown = false);
   ranges.forEach(range => range.addEventListener("input", handleRangeUpdate));
 };
