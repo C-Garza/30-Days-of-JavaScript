@@ -15,4 +15,10 @@ window.onload = function() {
       video.pause();
     }
   }
+
+  player.addEventListener("click", (e) => {
+    if(e.target === toggle || e.target === video) {
+      togglePlay();
+    }
+  });
 };
