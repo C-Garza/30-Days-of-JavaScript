@@ -54,6 +54,9 @@ body {
 .player__button:focus {
   border-color: #ffc600;
 }
+.fullscreen {
+  font-size: 1.5rem;
+}
 .player__slider {
   width: 10px;
   height: 30px;
