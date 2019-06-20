@@ -22,6 +22,9 @@ window.onload = function() {
   function skip(e) {
     video.currentTime += parseFloat(e.dataset.skip);
   }
+  function handleRangeUpdate() {
+    video[this.name] = this.value;
+  }
 
   player.addEventListener("click", (e) => {
     if(e.target === toggle || e.target === video) {
@@ -35,4 +38,5 @@ window.onload = function() {
   });
   video.addEventListener("play", updateButton);
   video.addEventListener("pause", updateButton);
+  ranges.forEach(range => range.addEventListener("input", handleRangeUpdate));
 };
