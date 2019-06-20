@@ -19,11 +19,19 @@ window.onload = function() {
     let icon = this.paused ? "►" : "❚ ❚";
     toggle.textContent = icon;
   }
+  function skip(e) {
+    video.currentTime += parseFloat(e.dataset.skip);
+  }
 
   player.addEventListener("click", (e) => {
     if(e.target === toggle || e.target === video) {
       togglePlay();
     }
+    skipButtons.forEach(button => {
+      if(e.target === button) {
+        skip(e.target);
+      }
+    });
   });
   video.addEventListener("play", updateButton);
   video.addEventListener("pause", updateButton);
