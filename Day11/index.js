@@ -25,6 +25,10 @@ window.onload = function() {
   function handleRangeUpdate() {
     video[this.name] = this.value;
   }
+  function handleProgress() {
+    let percent = (video.currentTime / video.duration) * 100;
+    progressBar.style.flexBasis = percent + "%";
+  }
 
   player.addEventListener("click", (e) => {
     if(e.target === toggle || e.target === video) {
@@ -38,5 +42,6 @@ window.onload = function() {
   });
   video.addEventListener("play", updateButton);
   video.addEventListener("pause", updateButton);
+  video.addEventListener("timeupdate", handleProgress);
   ranges.forEach(range => range.addEventListener("input", handleRangeUpdate));
 };
