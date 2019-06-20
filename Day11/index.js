@@ -6,6 +6,7 @@ window.onload = function() {
   let toggle = player.querySelector(".toggle");
   let ranges = player.querySelectorAll(".player__slider");
   let skipButtons = player.querySelectorAll("[data-skip]");
+  let fullscreen = player.querySelector(".fullscreen");
   let mousedown = false;
 
   function togglePlay() {
@@ -34,6 +35,36 @@ window.onload = function() {
     let scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
     video.currentTime = scrubTime;
   }
+  function toggleFullscreen() {
+    if(!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) {
+      if(player.requestFullscreen) {
+        player.requestFullscreen();
+      }
+      else if(player.mozRequestFullScreen) {
+        player.mozRequestFullScreen();
+      }
+      else if(player.webkitRequestFullscreen) {
+        player.webkitRequestFullscreen();
+      }
+      else if(player.msRequestFullscreen) {
+        player.msRequestFullscreen();
+      }
+    }
+    else {
+      if(document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+      else if(document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      }
+      else if(document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      else if(document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+  }
 
   player.addEventListener("click", (e) => {
     if(e.target === toggle || e.target === video) {
@@ -41,6 +72,9 @@ window.onload = function() {
     }
     if(e.target === progress || e.target === progressBar) {
       scrub(e);
+    }
+    if(e.target === fullscreen) {
+      toggleFullscreen();
     }
     skipButtons.forEach(button => {
       if(e.target === button) {
