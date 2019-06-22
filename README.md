@@ -13,3 +13,4 @@ The GitHub for that challenge can be found here: https://github.com/wesbos/JavaS
 [Day 9](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day9): Dev tools console commands practice. <br />
 [Day 10](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day10): Shift-click to check multiple checkboxes. Firefox does not like shift-click on labels :pensive: <br />
 [Day 11](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day11): HTML5 video player practice. <br />
+[Day 12](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day12): Detect correct sequence of keys being pressed. (KONAMI Code) <br />
