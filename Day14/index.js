@@ -61,8 +61,13 @@ window.onload = function() {
     name: 'Wes Bos',
     age: 80
   };
+  console.log(person);
 
   // and think we make a copy:
+  let captain = person;
+  captain.number = 99;
+  console.log(captain);
+  console.log(person);
 
   // how do we take a copy instead?
 
