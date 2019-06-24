@@ -1,5 +1,16 @@
 window.onload = function() {
   // start with strings, numbers and booleans
+  let age = 100;
+  let age2 = age;
+  console.log(age, age2);
+  age = 200;
+  console.log(age, age2);
+
+  let name = "Chris";
+  let name2 = name;
+  console.log(name, name2);
+  name = "Wes";
+  console.log(name, name2);
 
   // Let's say we have an array
   const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
@@ -41,5 +52,5 @@ window.onload = function() {
   // We will hopefully soon see the object ...spread
 
   // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
-  
+
 };
