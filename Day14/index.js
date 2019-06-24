@@ -16,8 +16,13 @@ window.onload = function() {
   const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
   // and we want to make a copy of it.
+  let team = players;
+  console.log(players, team);
 
   // You might think we can just do something like this:
+  team[3] = "Lux";
+  console.log(team);
+  console.log(players);
 
   // however what happens when we update that array?
 
