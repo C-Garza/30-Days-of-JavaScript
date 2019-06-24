@@ -35,10 +35,22 @@ window.onload = function() {
   // So, how do we fix this? We take a copy instead!
 
   // one way
+  let team2 = players.slice();
+  console.log(team2);
 
   // or create a new array and concat the old one in
+  let team3 = [].concat(players);
+  console.log(team3);
 
   // or use the new ES6 Spread
+  let team4 = [...players];
+  console.log(team4);
+  team4[3] = "Chris";
+  console.log(team4);
+  console.log(players);
+
+  let team5 = Array.from(players);
+  console.log(team5);
 
   // now when we update it, the original one isn't changed
 
