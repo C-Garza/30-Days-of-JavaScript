@@ -15,3 +15,4 @@ The GitHub for that challenge can be found here: https://github.com/wesbos/JavaS
 [Day 11](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day11): HTML5 video player practice. <br />
 [Day 12](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day12): Detect correct sequence of keys being pressed. (KONAMI Code) <br />
 [Day 13](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day13): Animation on scroll practice. <br />
+[Day 14](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day14): Javascript pass-by-value practice with arrays and objects. <br />
