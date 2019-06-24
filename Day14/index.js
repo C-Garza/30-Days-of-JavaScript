@@ -70,8 +70,12 @@ window.onload = function() {
   console.log(person);
 
   // how do we take a copy instead?
+  let cap2 = Object.assign({}, person, {number2: 99, age: 12});
+  console.log(cap2);
+  console.log(person);
 
   // We will hopefully soon see the object ...spread
+  // let cap3 = {...person};
 
   // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
 
