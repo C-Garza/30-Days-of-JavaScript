@@ -78,5 +78,27 @@ window.onload = function() {
   // let cap3 = {...person};
 
   // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+  let chris = {
+    name: "Chris",
+    age: 100,
+    social: {
+      twitter: "@Handle",
+      facebook: "Chris.facebook"
+    }
+  };
+  console.log(chris);
+  let dev = Object.assign({}, chris);
+  console.log(dev);
+  dev.name = "Wesley";
+  console.log(chris);
+  console.log(dev);
+  dev.social.twitter = "@coolman";
+  console.log(dev.social);
+  console.log(chris.social);
 
+  let dev2 = JSON.parse(JSON.stringify(chris));
+  console.log(dev2);
+  dev2.social.twitter = "@coolman2";
+  console.log(dev2.social);
+  console.log(chris.social);
 };
