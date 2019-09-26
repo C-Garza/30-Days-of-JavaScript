@@ -1,5 +1,6 @@
 A repository going through the JavaScript 30 challenge.
 The GitHub for that challenge can be found here: https://github.com/wesbos/JavaScript30
+### Live Demo's can be found [here](https://c-garza.github.io/30-Days-of-JavaScript/)
 
 [helper-functions](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/helper-functions): Functions to be imported to other days.<br />
 [Day 1](https://github.com/C-Garza/30-Days-of-JavaScript/tree/master/Day1): Drum machine with recording capabilities. <br />
